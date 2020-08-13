@@ -19,9 +19,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-  res.render("home", { hometext: homeStartingContent });
+  res.render("home", { homeText: homeStartingContent });
 });
 
+app.get("/about", function (req, res) {
+  res.render("about", { aboutText: aboutContent });
+});
+
+app.get("/contact", function (req, res) {
+  res.render("contact", { contactText: contactContent });
+});
+app.get("/compose", function (req, res) {
+  res.render("compose");
+  // console.log(req.body.text1);
+});
+app.post("/compose", function (req, res) {
+  const post = { title: req.body.postTitle, content: req.body.postBody };
+  console.log(post);
+});
 app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
