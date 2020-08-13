@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const lod = require("lodash");
 const posts = [];
 
 const homeStartingContent =
@@ -38,6 +39,15 @@ app.post("/compose", function (req, res) {
   const post = { title: req.body.postTitle, content: req.body.postBody };
   posts.push(post);
   res.redirect("/");
+});
+app.get("/posts/:postName", function (req, res) {
+  const postN = req.params.postName;
+  posts.forEach(function (post) {
+    postTitle1 = post.title;
+    if (lod.lowerCase(postTitle1) === lod.lowerCase(postN)) {
+      res.render("post", { postName: post });
+    }
+  });
 });
 app.listen(3000, function () {
   console.log("Server started on port 3000");
